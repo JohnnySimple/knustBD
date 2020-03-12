@@ -11,15 +11,16 @@
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
 
         <!-- Styles -->
+        <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         <style>
-            html, body {
+            /* html, body {
                 background-color: #fff;
                 color: #636b6f;
                 font-family: 'Raleway', sans-serif;
                 font-weight: 100;
                 height: 100vh;
                 margin: 0;
-            }
+            } */
 
             .full-height {
                 height: 100vh;
@@ -43,14 +44,16 @@
 
             .content {
                 text-align: center;
+                color: #fff;
             }
 
             .title {
                 font-size: 84px;
+                font-family: "Shadows Into Light" Cursive;
             }
 
             .links > a {
-                color: #636b6f;
+                color: #fff;
                 padding: 0 25px;
                 font-size: 12px;
                 font-weight: 600;
@@ -59,13 +62,22 @@
                 text-transform: uppercase;
             }
 
-            .m-b-md {
-                margin-bottom: 30px;
+            .banner {
+                background-image: linear-gradient(to bottom, #001d38 0%, rgba(0, 29, 56, 0.6) 100%),
+                    url('imgs/banner.png'););
+                background-size: cover;
+                height: 700px;
+                width: 100%;   
             }
+
+            .search-form {
+                margin-left: 400px;
+            }
+            
         </style>
     </head>
     <body>
-        <div class="flex-center position-ref full-height">
+        <div class="flex-center position-ref">
             @if (Route::has('login'))
                 <div class="top-right links">
                     @auth
@@ -76,25 +88,16 @@
                     @endauth
                 </div>
             @endif
+        </div>
 
-            <div class="content">
-                <div class="title m-b-md">
-                    KNUSTBD
-                </div>
-                <div class="container">
-                    <div>
-                        <!-- <img src="{{ asset('imgs/img1.jpeg') }}" alt="img not found" height="50px"> -->
-                    </div>
-                </div>
-
-                <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>
+        <div class="container-fluid banner" >
+            <div class="content" style="margin-top:200px;">
+                <a href="{{ route('login') }}"><button class="btn btn-danger">Login</button></a>
+                <a href="{{ route('register') }}"><button class="btn btn-danger">Register</button></a>
             </div>
         </div>
+
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}"></script>
     </body>
 </html>

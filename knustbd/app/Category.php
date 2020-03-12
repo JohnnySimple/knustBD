@@ -13,6 +13,6 @@ class Category extends Model
     ];
 
     public function businesses(){
-        return $this->morphedByMany('App\Business', 'categorable');
+        return $this->belongsToMany('App\Business');
     }
 }

@@ -15,9 +15,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
 
+
+Auth::routes();
+// route('Overall.searchedBusinesses');
 Route::get('/home', 'HomeController@index')->name('home');
+
+
+Route::get('businesses/index', 'BusinessesController@index');
+Route::get('businesses/searched', 'BusinessesController@searched')->name('Overall.searched');
 
 Route::resource('businesses', 'BusinessesController');
 Route::resource('categories', 'CategoriesController');

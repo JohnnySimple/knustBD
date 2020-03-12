@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Business;
+use App\Category;
 
 class HomeController extends Controller
 {
@@ -26,6 +27,7 @@ class HomeController extends Controller
     public function index()
     {
         $businesses = Business::all();
-        return view('home', ['businesses'=>$businesses]);
+        $categories = Category::all();
+        return view('home', ['businesses'=>$businesses, 'categories'=>$categories]);
     }
 }

@@ -25,6 +25,6 @@ class Business extends Model
     }
 
     public function categories(){
-        return $this->morphToMany('App\Category', 'categorable');
+        return $this->belongsToMany('App\Category');
     }
 }

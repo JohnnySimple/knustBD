@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Business;
+use App\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -13,11 +14,27 @@ class BusinessesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
+        $cat = Category::find($request->input('category'));
+        $businesses = Business::all();
 
-        return view('businesses/index');
+        return view('businesses/index', ['cat'=>$cat, 'businesses'=>$businesses]);
+    }
+
+    /**
+     * user defined function route for searched business.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function searched(Request $request)
+    {
+        //
+        $cat = Category::find($request->input('category'));
+        $businesses = Business::all();
+
+        return view('businesses/searched', ['cat'=>$cat, 'businesses'=>$businesses]);
     }
 
     /**

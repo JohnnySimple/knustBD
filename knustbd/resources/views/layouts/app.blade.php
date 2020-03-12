@@ -49,7 +49,7 @@
 
                             @if(Auth::user()->role_id == 2)
                                 <li><a href="/businesses/create">Add Business</a></li>
-                                <li><a href="/businesses">View Businesses</a></li>
+                                <li><a href="/businesses/index">View Businesses</a></li>
                             @endif
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre>
