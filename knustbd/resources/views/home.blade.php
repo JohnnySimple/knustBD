@@ -60,7 +60,7 @@
 
 <div class="container-fluid banner" >
     <div class="content" style="margin-top:200px;">
-        <p class="title">Search business?</p>
+        <p class="title">Search business</p>
         <div class="row" >
         <div class="search-form col-md-4">
             <form method="get" action="{{ route('Overall.searched') }}">

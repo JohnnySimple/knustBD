@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="container">
-        <h2>Businesses of a particular category will be listed here</h2>
+        <h2>Businesses of current user will be listed here</h2>
         
     </div>
 

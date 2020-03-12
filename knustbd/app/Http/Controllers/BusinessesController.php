@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Business;
 use App\Category;
+use App\BusinessCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -32,9 +33,10 @@ class BusinessesController extends Controller
     {
         //
         $cat = Category::find($request->input('category'));
+        $categories = Category::all();
         $businesses = Business::all();
 
-        return view('businesses/searched', ['cat'=>$cat, 'businesses'=>$businesses]);
+        return view('businesses/searched', ['cat'=>$cat, 'businesses'=>$businesses, 'categories'=>$categories]);
     }
 
     /**
@@ -66,7 +68,16 @@ class BusinessesController extends Controller
                 'user_id' => Auth::user()->id
             ]);
 
-            if($business){
+            $cat = Category::find($request->input('category1'));
+
+            if(!$cat){
+                $category = Category::create([
+                    'name' => $request->input('category1')
+                ]);
+            }
+
+            
+            if($business & $category){
                 return redirect()->route('businesses', ['business'=>$business->id])
                 ->with('success', 'Business added successfully');
             }

@@ -32,6 +32,15 @@
                           placeholder="Enter telphone">
                     </div>
 
+                    <div class="form-group category-field" id="cat">
+                        <label for="business-category">Add category <span class="required">*</span></label>
+                        <input type="text" name="category1" id="business-category" class="form-control" required
+                        spellcheck="false" placeholder="Enter business category">
+                    </div>
+                    <!-- <div class="form-group">
+                        <button class="btn btn-primary" onclick="addNew()">Add anoter category</button>
+                    </div> -->
+
                     <div class="form-group">
                         <input type="submit" class="btn btn-primary" value="Add">
                     </div>
@@ -39,5 +48,17 @@
             </div>
         </div>
     </div>
+<!-- 
+    <script>
+    
+        var counter = 1;
+        
+        function addNew() {
+            // $(formFieldsString.replace('[0]', '[' + (++counter) + ']')).appendTo('#category-field');
+            document.getElementById("cat").innerHTML += '<label for="business-category">Add category <span class="required">*</span></label> \
+                        <input type="text" name="category'+(++counter)+'" id="business-category" class="form-control" required \
+                        spellcheck="false" placeholder="Enter business category">';
+        }
+    </script> -->
 
 @endsection
