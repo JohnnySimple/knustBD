@@ -7,7 +7,8 @@
         margin-top: 20px;
     }
     .business-img {
-        height: 120px;
+        height: 100%;
+        border-radius: 10px;
     }
     .business-name {
         font-size: 13px;
@@ -20,43 +21,29 @@
     <div class="container">
 
       <div class="blog-header">
-        <h2 class="blog-title">Search Results</h2>
-
+        <h2 class="blog-title">{{$business->name}}</h2>
       </div>
 
       <div class="row">
-        <div class="col-sm-8 blog-main">
-            @foreach($businesses as $business)
-                @foreach($business->categories as $category)
-                    @if($category->id == $cat->id)
+        <div class="col-md-8 col-sm-8 blog-main">
+        <h2>Add category</h2>
+                <form method="post" action="{{ route('businessescategories.store', [$business->id]) }}">
+                    {{ csrf_field() }}
+                    <!-- <input type="hidden" name="_method" value="put"> -->
 
-                         <!-- single business -->
-                            <div class="business-post">
-                                <a href="/businesses/{{ $business->id }}"><div class="col-md-3 col-sm-3 business-img" 
-                                style="background-image:url('/imgs/offer-img.png');background-size:cover;">
-                                </div></a>
-                                <div class="col-md-8 col-sm-8">
-                                <a href="/businesses/{{ $business->id }}" style="text-decoration:none;">
-                                  <p class="business-name" style="color:black;">
-                                    {{ $business->name }}
-                                  </p>
-                                </a>
-                                <p style="color:blue;">{{ $business->location }} - 0{{ $business->phone }}</p>
-                                <p>
-                                    <span style="color:blue;">Categories: </span>
-                                    @foreach($business->categories as $cate)
-                                        {{ $cate->name }},
-                                    @endforeach
-                                    
-                                </p>
-                                </div>
-                            </div>
-                            <hr>
-                        <!-- end of single business -->
-                    @endif
-                @endforeach
-            @endforeach
-           
+                    <div class="form-group">
+                    <label for="business-category">Business Category <span class="required">*</span></label>
+                        <select name="category" class="form-control">
+                            @foreach($categories as $category)
+                                <option value="{{$category->id}}">{{ $category->name }}</option>
+                            @endforeach
+                        </select>
+                     </div>
+
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-primary" value="Add">
+                    </div>
+                </form>
 
           <!-- <nav>
             <ul class="pager">

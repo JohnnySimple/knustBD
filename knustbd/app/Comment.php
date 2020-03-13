@@ -9,6 +9,7 @@ class Comment extends Model
     //
     protected $fillable = [
         'body',
+        'rating',
         'user_id',
         'commentable_id',
         'commentable_type',

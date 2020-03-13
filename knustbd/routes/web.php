@@ -21,11 +21,13 @@ Auth::routes();
 // route('Overall.searchedBusinesses');
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::middleware(['auth'])->group(function () {
+    Route::get('businesses/index', 'BusinessesController@index');
+    Route::get('businesses/searched', 'BusinessesController@searched')->name('Overall.searched');
 
-Route::get('businesses/index', 'BusinessesController@index');
-Route::get('businesses/searched', 'BusinessesController@searched')->name('Overall.searched');
-
-Route::resource('businesses', 'BusinessesController');
-Route::resource('categories', 'CategoriesController');
-Route::resource('comments', 'CommentsController');
-Route::resource('users', 'UsersController');
+    Route::resource('businesses', 'BusinessesController');
+    Route::resource('businessescategories', 'BusinessesCategoriesController');
+    Route::resource('categories', 'CategoriesController');
+    Route::resource('comments', 'CommentsController');
+    Route::resource('users', 'UsersController');
+});

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Business;
 use App\Category;
 use App\BusinessCategory;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,10 +19,9 @@ class BusinessesController extends Controller
     public function index(Request $request)
     {
         //
-        $cat = Category::find($request->input('category'));
         $businesses = Business::all();
 
-        return view('businesses/index', ['cat'=>$cat, 'businesses'=>$businesses]);
+        return view('businesses/index', ['businesses'=>$businesses]);
     }
 
     /**
@@ -68,17 +68,9 @@ class BusinessesController extends Controller
                 'user_id' => Auth::user()->id
             ]);
 
-            $cat = Category::find($request->input('category1'));
-
-            if(!$cat){
-                $category = Category::create([
-                    'name' => $request->input('category1')
-                ]);
-            }
-
             
-            if($business & $category){
-                return redirect()->route('businesses', ['business'=>$business->id])
+            if($business){
+                return redirect()->route('businesses.index', ['business'=>$business->id])
                 ->with('success', 'Business added successfully');
             }
         }
@@ -95,8 +87,9 @@ class BusinessesController extends Controller
     {
         //
         $business = Business::find($business->id);
+        $users = User::all();
 
-        return view('businesses/show', ['business'=>$business]);
+        return view('businesses.show', ['business'=>$business, 'users'=>$users]);
     }
 
     /**
@@ -108,6 +101,11 @@ class BusinessesController extends Controller
     public function edit(Business $business)
     {
         //
+
+        $business = Business::find($business->id);
+        $categories = Category::all();
+
+        return view('businesses.edit', ['business'=>$business, 'categories'=>$categories]);
     }
 
     /**
@@ -120,6 +118,8 @@ class BusinessesController extends Controller
     public function update(Request $request, Business $business)
     {
         //
+        
+
     }
 
     /**

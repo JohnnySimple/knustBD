@@ -12,6 +12,16 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/fontawesome.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/solid.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/brands.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/all.css') }}" rel="stylesheet">
+
+
+    <script src="{{ asset('js/fontawesome.js') }}"></script>
+    <script src="{{ asset('js/solid.js') }}"></script>
+    <script src="{{ asset('js/brands.js') }}"></script>
+    <script src="{{ asset('js/all.js') }}"></script>
 </head>
 <body>
     <div id="app">
@@ -49,7 +59,7 @@
 
                             @if(Auth::user()->role_id == 2)
                                 <li><a href="/businesses/create">Add Business</a></li>
-                                <li><a href="/businesses/index">View Businesses</a></li>
+                                <li><a href="/businesses/index">My Businesses</a></li>
                             @endif
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre>

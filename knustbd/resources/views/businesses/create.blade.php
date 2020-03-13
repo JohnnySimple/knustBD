@@ -32,11 +32,11 @@
                           placeholder="Enter telphone">
                     </div>
 
-                    <div class="form-group category-field" id="cat">
+                    <!-- <div class="form-group category-field" id="cat">
                         <label for="business-category">Add category <span class="required">*</span></label>
                         <input type="text" name="category1" id="business-category" class="form-control" required
                         spellcheck="false" placeholder="Enter business category">
-                    </div>
+                    </div> -->
                     <!-- <div class="form-group">
                         <button class="btn btn-primary" onclick="addNew()">Add anoter category</button>
                     </div> -->
