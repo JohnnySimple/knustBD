@@ -27,10 +27,10 @@
       <div class="row">
         <div class="col-md-8 col-sm-8 blog-main">
         <h2>Add category</h2>
-                <form method="post" action="{{ route('businessescategories.store', [$business->id]) }}">
+                <form method="post" action="{{ route('businessescategories.store')}}">
                     {{ csrf_field() }}
                     <!-- <input type="hidden" name="_method" value="put"> -->
-
+                    <input type="hidden" name="businessId" value="{{ $business->id }}">
                     <div class="form-group">
                     <label for="business-category">Business Category <span class="required">*</span></label>
                         <select name="category" class="form-control">

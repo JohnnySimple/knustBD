@@ -73,6 +73,12 @@
             .search-form {
                 margin-left: 400px;
             }
+
+            @media only screen and (max-width: 700px) {
+                .search-form {
+                    margin-left: 10px;
+                }
+            }
             
         </style>
     </head>
@@ -89,13 +95,38 @@
                 </div>
             @endif
         </div>
+        
+        <div class="container-fluid banner">
+            <div class="content" style="margin-top:200px;">
+                <p class="title">Search business</p>
+                <div class="row" >
+                <div class="search-form col-md-4">
+                    <form method="get" action="{{ route('Overall.searched') }}">
+                        {{ csrf_field() }}
+                        <div class="form-group">
+                            <select name="category" class="form-control">
+                                @foreach($categories as $category)
+                                    <option value="{{$category->id}}">{{ $category->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-danger" value="Search">
+                        </div>
+                    </form>
+                </div>
+                
+                <div>
+            </div>
+            
+        </div>
 
-        <div class="container-fluid banner" >
+        <!-- <div class="container-fluid banner" >
             <div class="content" style="margin-top:200px;">
                 <a href="{{ route('login') }}"><button class="btn btn-danger">Login</button></a>
                 <a href="{{ route('register') }}"><button class="btn btn-danger">Register</button></a>
             </div>
-        </div>
+        </div> -->
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>

@@ -14,7 +14,11 @@
         font-size: 13px;
         font-weight: bold;
     }
-    
+    @media only screen and (max-width: 800px) {
+      .business-post {
+        margin-bottom: 170px;
+      }
+    }
 </style>
 @section('content')
 
@@ -31,12 +35,31 @@
                     <!-- single business -->
                     <div class="business-post">
                                 <div class="col-md-3 col-sm-3 business-img" 
-                                style="background-image:url('/imgs/banner.png');background-size:cover;">
+                                style="background-image:url('/imgs/businessImgs/{{$business->imageName}}');background-size:cover;
+                                background-position:center;">
 
                                 </div>
                                 <div class="col-md-8 col-sm-8">
                                 <p class="business-name">{{ $business->name }}</p>
                                 <p style="color:blue;">{{ $business->location }} - 0{{ $business->phone }}</p>
+                                
+                                <p>
+                                    @for($i=0; $i<$business->rating; $i++)
+                                        <span class="fas fa-star" style="color:white;background-color:red;
+                                            padding:2px;border-radius:15%;"></span>
+                                    @endfor
+                                    @for($i=1; $i < 6-$business->rating; $i++)
+                                        <span class="fas fa-star" style="color:white;background-color:#ccc;
+                                                padding:2px;border-radius:15%;"></span>
+                                    @endfor
+                                </p>
+                                <p>
+                                    <span style="color:blue;">Categories: </span>
+                                    @foreach($business->categories as $cate)
+                                        {{ $cate->name }},
+                                    @endforeach
+                                    
+                                </p>
                                 </div>
                                 <a href="/businesses/{{$business->id}}/edit"><button class="btn">Edit</button></a>
                     </div>
@@ -44,6 +67,7 @@
                         <!-- end of single business -->
                 @endif
             @endforeach
+
 
           <!-- <nav>
             <ul class="pager">

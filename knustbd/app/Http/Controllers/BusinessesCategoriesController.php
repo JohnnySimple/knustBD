@@ -7,8 +7,9 @@ use App\Business;
 use App\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
-class BusinessCategoriesController extends Controller
+class BusinessesCategoriesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -32,31 +33,70 @@ class BusinessCategoriesController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * user defined function route for adding category.
      *
+     * @return \Illuminate\Http\Response
+     */
+    public function sayBusiness() {
+        dd('hello');
+    }
+
+
+    /**
+     * Store a newly created resource in storage.
+     * 
      * @param  \Illuminate\Http\Request  $request
+     * @param \App\Business  $business
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request, Business $business)
     {
         //
+        $business_id = $request->input('businessId');
         $cat_id = null;
         $categories = Category::all();
-        if(Auth::check()){
-            foreach($categories as $category){
-                if($category->name == $request->input('category')){
-                    $cat_id = $category->id;
-                }
-            }
-            $buscat = BusinessCategory::create([
-                'business_id' => $business->id,
-                'category_id' => $cat_id
-                ]);
+        $business = Business::find($business_id);
 
-                if($buscat){
-                    return redirect()->route('businesses.index', ['business'=>$business->id])
-                    ->with('success', 'Category added successfully');
-                }
+        foreach($business->categories as $object) {
+            $business_categories[] = (array) $object;
+        }
+
+        // dd($business->categories);
+
+        if(Auth::check()){
+
+            $cat_id = $request->input('category');
+
+            // $is_present = DB::table('business_category')->where('business_id', $business_id)->first();
+            $is_present = DB::table('business_category')->where('business_id', $business_id)
+            ->where('category_id', $cat_id)
+            ->exists();
+
+            if($is_present) {
+                dd('This category has been added already!');
+            } else {
+                $buscat = BusinessCategory::create([
+                    'business_id' => $business_id,
+                    'category_id' => $cat_id
+                    ]);
+        
+                    if($buscat){
+                        return redirect()->route('businesses.index', ['business'=>$business->id])
+                        ->with('success', 'Category added successfully');
+                    }
+            }
+            
+            // // dd($cat_id);
+            // $buscat = BusinessCategory::create([
+            //     'business_id' => $business_id,
+            //     'category_id' => $cat_id
+            //     ]);
+    
+            //     if($buscat){
+            //         return redirect()->route('businesses.index', ['business'=>$business->id])
+            //         ->with('success', 'Category added successfully');
+            //     }
+            
         }
         return back()->withInput()->with('errors', 'Error adding category!');
         

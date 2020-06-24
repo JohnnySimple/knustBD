@@ -8,7 +8,8 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'KNUSTBD') }}</title>
+    <!-- <title>{{ config('app.name', 'KNUSTBD') }}</title> -->
+    <title>KNUSTBD</title>
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -39,7 +40,8 @@
 
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'KNUSTBD') }}
+                        <!-- {{ config('app.name', 'KNUSTBD') }} -->
+                        KNUSTBD
                     </a>
                 </div>
 
@@ -59,7 +61,7 @@
 
                             @if(Auth::user()->role_id == 2)
                                 <li><a href="/businesses/create">Add Business</a></li>
-                                <li><a href="/businesses/index">My Businesses</a></li>
+                                <li><a href="/businesses">My Businesses</a></li>
                             @endif
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre>

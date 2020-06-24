@@ -8,6 +8,7 @@ use App\BusinessCategory;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class BusinessesController extends Controller
 {
@@ -20,6 +21,7 @@ class BusinessesController extends Controller
     {
         //
         $businesses = Business::all();
+        // $businesses = DB::table('businesses')->simplePaginate(4);
 
         return view('businesses/index', ['businesses'=>$businesses]);
     }
@@ -58,14 +60,40 @@ class BusinessesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+        $target_dir = "../public/imgs/businessImgs/";
+        $target_dir = $target_dir . basename($_FILES["businessThumbnail"]["name"]);
+        $uploadOk = 1;
+        $FileType = pathinfo($target_dir, PATHINFO_EXTENSION);
+
+         // allow certain file formats
+        if($FileType != "png" && $FileType != "jpg" && $FileType != "jpeg"){
+            echo "Sorry, only jpg, png and jpeg are allowed!";
+            $uploadOk = 0;
+        }
+
+        if($uploadOk == 0){
+            echo "Sorry, your image was not uploaded!";
+        } else {
+            if(move_uploaded_file($_FILES['businessThumbnail']['tmp_name'], $target_dir)){
+                echo "The image " . basename($_FILES['businessThumbnail']['name']) . " is uploaded";
+            }
+            else {
+                echo "Problem uploading image";
+            }
+
+            $fileName = basename($_FILES['businessThumbnail']['name']);
+        }
+
         if(Auth::check()){
             $business = Business::create([
                 'name' => $request->input('name'),
                 'email' => $request->input('email'),
                 'location' => $request->input('location'),
                 'phone' => $request->input('phone'),
-                'user_id' => Auth::user()->id
+                'user_id' => Auth::user()->id,
+                'imageName' => $fileName,
+                'rating' => 0
             ]);
 
             
@@ -88,8 +116,19 @@ class BusinessesController extends Controller
         //
         $business = Business::find($business->id);
         $users = User::all();
+        $comms = DB::table('comments')->where('commentable_id', $business->id)->simplePaginate(5);
+        $avg_star = 0;
+        $avg = 0;
+        $comments = $business->comments;
+        foreach($comments as $val) {
+            $avg_star += $val->rating;
+            $avg = $avg_star/count($comments);
+            
+        }
+        // $avg_star = Business::avg($arrays);
+     
 
-        return view('businesses.show', ['business'=>$business, 'users'=>$users]);
+        return view('businesses.show', ['business'=>$business, 'comms'=>$comms, 'comments'=>$comments, 'users'=>$users, 'avg_star'=>ceil($avg)]);
     }
 
     /**
@@ -103,7 +142,7 @@ class BusinessesController extends Controller
         //
 
         $business = Business::find($business->id);
-        $categories = Category::all();
+        $categories = Category::all()->sortBy('name');
 
         return view('businesses.edit', ['business'=>$business, 'categories'=>$categories]);
     }

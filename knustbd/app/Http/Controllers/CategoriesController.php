@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\BusinessCategory;
 use Illuminate\Http\Request;
 
 class CategoriesController extends Controller
@@ -36,6 +37,18 @@ class CategoriesController extends Controller
     public function store(Request $request)
     {
         //
+
+        $cat_id = null;
+        $categories = Category::all();
+
+        if(Auth::check()){
+            foreach($categories as $category) {
+                if($category->name == $request->input('category')) {
+                    $cat_id = $category->id;
+                }
+            }
+        }
+        return back()->withInput()->with('errors', "Error adding category!");
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Comment;
+use App\Business;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -31,6 +32,7 @@ class CommentsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
+     * @param  \App\Business  $business
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
@@ -38,7 +40,10 @@ class CommentsController extends Controller
     {
         //
 
+        $business = Business::find($request->input('commentable_id'));
+
         if(Auth::check()){
+            
             $comment = Comment::create([
                 'body' => $request->input('body'),
                 'rating' => $request->input('rating'),
@@ -46,10 +51,26 @@ class CommentsController extends Controller
                 'commentable_id' => $request->input('commentable_id'),
                 'user_id' => Auth::user()->id
             ]);
+
+            $avg_star = 0;
+
+            $comments = $business->comments;
+            foreach($comments as $val) {
+                $avg_star += $val->rating;
+                $avg = $avg_star/count($comments);
+                
+            }
+
+            $business_update = Business::where('id', $business->id)->
+            update([
+                'rating' => ceil($avg)
+            ]);
             
-            if($comment){
+            if($comment && $business_update){
                 return back()->with('success', 'Comment created successfully');
             }
+
+            
         }
         return back()->withInput()->with('errors', 'Error adding review');
     }

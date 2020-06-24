@@ -13,19 +13,24 @@
         font-size: 13px;
         font-weight: bold;
     }
+    @media only screen and (max-width: 800px) {
+      .business-post {
+        margin-bottom: 150px;
+      }
+    }
     
 </style>
 @section('content')
 
     <div class="container">
 
-      <div class="blog-header">
-        <h2 class="blog-title">Search Results</h2>
-
-      </div>
 
       <div class="row">
         <div class="col-sm-8 blog-main">
+          <div class="blog-header">
+            <h2 class="blog-title">Search Results for {{ $cat->name }}</h2>
+            <hr>
+          </div>
             @foreach($businesses as $business)
                 @foreach($business->categories as $category)
                     @if($category->id == $cat->id)
@@ -33,7 +38,8 @@
                          <!-- single business -->
                             <div class="business-post">
                                 <a href="/businesses/{{ $business->id }}"><div class="col-md-3 col-sm-3 business-img" 
-                                style="background-image:url('/imgs/offer-img.png');background-size:cover;">
+                                style="background-image:url('/imgs/businessImgs/{{ $business->imageName }}');background-size:cover;
+                                background-position:center;">
                                 </div></a>
                                 <div class="col-md-8 col-sm-8">
                                 <a href="/businesses/{{ $business->id }}" style="text-decoration:none;">
@@ -42,6 +48,17 @@
                                   </p>
                                 </a>
                                 <p style="color:blue;">{{ $business->location }} - 0{{ $business->phone }}</p>
+                                
+                                <p>
+                                    @for($i=0; $i<$business->rating; $i++)
+                                        <span class="fas fa-star" style="color:white;background-color:red;
+                                            padding:2px;border-radius:15%;"></span>
+                                    @endfor
+                                    @for($i=1; $i < 6-$business->rating; $i++)
+                                        <span class="fas fa-star" style="color:white;background-color:#ccc;
+                                                padding:2px;border-radius:15%;"></span>
+                                    @endfor
+                                </p>
                                 <p>
                                     <span style="color:blue;">Categories: </span>
                                     @foreach($business->categories as $cate)

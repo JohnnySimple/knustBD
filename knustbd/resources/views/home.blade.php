@@ -33,6 +33,11 @@
             .search-form {
                 margin-left: 400px;
             }
+            @media only screen and (max-width: 700px) {
+                .search-form {
+                    margin-left: 10px;
+                }
+            }
 
 </style>
 @section('content')

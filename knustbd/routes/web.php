@@ -1,5 +1,7 @@
 <?php
 
+use App\Category;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,7 +14,8 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $categories = Category::all()->sortBy('name');
+    return view('welcome', ['categories'=>$categories]);
 });
 
 
@@ -21,11 +24,13 @@ Auth::routes();
 // route('Overall.searchedBusinesses');
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('businesses/searched', 'BusinessesController@searched')->name('Overall.searched');
+Route::resource('businesses', 'BusinessesController');
+
 Route::middleware(['auth'])->group(function () {
     Route::get('businesses/index', 'BusinessesController@index');
-    Route::get('businesses/searched', 'BusinessesController@searched')->name('Overall.searched');
-
-    Route::resource('businesses', 'BusinessesController');
+    Route::get('businessescategories/sayBusiness', 'BusinessesCategoriesController@sayBusiness');
+    // Route::get('businessescategories/{id}', 'BusinessesCategoriesController@store');
     Route::resource('businessescategories', 'BusinessesCategoriesController');
     Route::resource('categories', 'CategoriesController');
     Route::resource('comments', 'CommentsController');

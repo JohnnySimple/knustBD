@@ -14,6 +14,8 @@ class Business extends Model
         'location',
         'phone',
         'user_id',
+        'imageName',
+        'rating',
     ];
 
     public function user(){

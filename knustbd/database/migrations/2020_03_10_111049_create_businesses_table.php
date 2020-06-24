@@ -20,6 +20,8 @@ class CreateBusinessesTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->string('location');
             $table->integer('phone');
+            $table->string('imageName');
+            $table->integer('rating');
 
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();

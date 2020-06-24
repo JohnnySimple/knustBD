@@ -1,5 +1,10 @@
 @extends('layouts.app')
 
+
+<link href="/fancybox-master/dist/jquery.fancybox.css" rel="stylesheet">
+<script src="/js/jquery1.js"></script>
+<script src="/fancybox-master/dist/jquery.fancybox.js"></script>
+
 <style>
     .business-post {
         /* border: 1px solid #ccc; */
@@ -15,6 +20,17 @@
     }
     .review {
     }
+    @media only screen and (max-width: 800px) {
+      .business-post {
+        margin-bottom: 150px;
+      }
+    }
+
+    .business-images img {
+      height: 100px;
+      width: 100px;
+    }
+    
     
 </style>
 @section('content')
@@ -31,8 +47,10 @@
              <!-- single business -->
              <div class="business-post">
                                 <a href="/businesses/{{ $business->id }}"><div class="col-md-3 col-sm-3 business-img" 
-                                style="background-image:url('/imgs/offer-img.png');background-size:cover;">
+                                style="background-image:url('/imgs/businessImgs/{{ $business->imageName }}');background-size:cover;
+                                background-position:center;">
                                 </div></a>
+                                
                                 <div class="col-md-8 col-sm-8">
                                 <a href="/businesses/{{ $business->id }}" style="text-decoration:none;">
                                   <p class="business-name" style="color:black;">
@@ -40,6 +58,17 @@
                                   </p>
                                 </a>
                                 <p style="color:blue;">{{ $business->location }} - 0{{ $business->phone }}</p>
+                                
+                                <p>
+                                    @for($i=0; $i<$business->rating; $i++)
+                                        <span class="fas fa-star" style="color:white;background-color:red;
+                                            padding:2px;border-radius:15%;"></span>
+                                    @endfor
+                                    @for($i=1; $i < 6-$business->rating; $i++)
+                                        <span class="fas fa-star" style="color:white;background-color:#ccc;
+                                                padding:2px;border-radius:15%;"></span>
+                                    @endfor
+                                </p>
                                 <p>
                                     <span style="color:blue;">Categories: </span>
                                     @foreach($business->categories as $cate)
@@ -49,10 +78,29 @@
                                 </p>
                                 </div>
                             </div>
+                            <div>
+                                <a href="#reviews"><button class="btn">{{ count($business->comments) }} Reviews</button></a>
+                            </div>
+                            
                             <hr>
                         <!-- end of single business -->
-            <h2>Reviews</h2>
-            @foreach($business->comments as $comment)
+                        
+                            <!-- business images -->
+                            <div class="business-images">
+                              <p>Images</p>
+                              <div id="gallery">
+                                @for($i=0; $i < 6; $i++)
+                                  <a href="/imgs/businessImgs/{{$business->imageName}}" data-fancybox="gallery">
+                                    <img src="/imgs/businessImgs/{{$business->imageName}}" class="image-responsive"
+                                    alt="Image cannot load">
+                                  </a>
+                                @endfor
+                              </div>
+                            </div>
+                            <hr>
+
+            <h2 id="reviews">Reviews</h2>
+            @foreach($comms as $comment)
                 <div class="review">
                     
                     @foreach($users as $user)
@@ -74,7 +122,11 @@
                 </div>
                 <hr>
             @endforeach
-            <h3>Add review</h3>
+
+            {{ $comms->links() }}
+            
+                @if(Auth::check())
+                <h3>Add review</h3>
                 <!-- Example row of columns -->
                 <div class="row" style="margin:10px;">
                         <form method="post" action="{{ route('comments.store') }}">
@@ -104,6 +156,7 @@
                             </div>
                         </form>
                 </div>
+                @endif
             <!-- single comment -->
             <div class="comment-post">
                 
@@ -148,5 +201,9 @@
       </div><!-- /.row -->
 
     </div>
-
+<script>
+  $(document).ready(function(){
+    $('#gallery a').fancybox();
+  });
+</script>
 @endsection

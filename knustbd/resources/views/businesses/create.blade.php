@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-md-6 col-lg-6 col-sm-6">
                 <h2>Add Business</h2>
-                <form method="post" action="{{ route('businesses.store') }}">
+                <form method="post" action="{{ route('businesses.store') }}" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <div class="form-group">
                         <label for="business-name">Business Name <span class="required">*</span></label>
@@ -31,6 +31,16 @@
                         <input type="tel" name="phone" id="business-phone" class="form-control" required
                           placeholder="Enter telphone">
                     </div>
+
+                    <div class="form-group">
+                        <label for="businessThumbnail">Select Business Image</label>
+                        <input type="file" name="businessThumbnail" id="businessThumbnail">
+                    </div>
+
+                    <!-- <div class="form-group">
+                        <label for="business-phone">Select Image</label>
+                        <input type="file" name="business-image" id="business-image" class="form-control" required>
+                    </div> -->
 
                     <!-- <div class="form-group category-field" id="cat">
                         <label for="business-category">Add category <span class="required">*</span></label>

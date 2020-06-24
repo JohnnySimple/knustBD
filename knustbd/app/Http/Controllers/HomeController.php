@@ -27,7 +27,7 @@ class HomeController extends Controller
     public function index()
     {
         $businesses = Business::all();
-        $categories = Category::all();
+        $categories = Category::all()->sortBy('name');
         return view('home', ['businesses'=>$businesses, 'categories'=>$categories]);
     }
 }
